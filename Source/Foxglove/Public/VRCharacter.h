@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "MotionControllerComponent.h"
-#include <Components/SceneComponent.h>
+#include "Components/SceneComponent.h"
 #include "VRCharacter.generated.h"
 
 UCLASS()

@@ -2,8 +2,7 @@
 
 
 #include "VRCharacter.h"
-#include <Camera/CameraComponent.h>
-#include "../../../../../ProjectFiles/TextUtils.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values
 AVRCharacter::AVRCharacter()
