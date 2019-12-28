@@ -1,0 +1,18 @@
+{
+	"source": "UE",
+	"applications": [
+		{
+			"app_key": "application.generated.ue.foxglove-cl-9631420.ue4editor.exe",
+			"launch_type": "url",
+			"url": "steam://launch/",
+			"action_manifest_path": "C:/Users/COMMAND_CENTER/Documents/Unreal Projects/Foxglove/Config/SteamVRBindings/steamvr_manifest.json",
+			"strings":
+			{
+				"en_us":
+				{
+					"name": "Foxglove-CL-9631420 [UE Editor]"
+				}
+			}
+		}
+	]
+}

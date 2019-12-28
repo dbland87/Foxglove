@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include <MotionControllerComponent.h>
+#include "MotionControllerComponent.h"
 #include <Components/SceneComponent.h>
 #include "VRCharacter.generated.h"
 
@@ -36,10 +36,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	class UMotionControllerComponent* LeftController;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	class UMotionControllerComponent* RightController;
-	
-};
+	};

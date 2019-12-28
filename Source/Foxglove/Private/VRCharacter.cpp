@@ -3,6 +3,7 @@
 
 #include "VRCharacter.h"
 #include <Camera/CameraComponent.h>
+#include "../../../../../ProjectFiles/TextUtils.h"
 
 // Sets default values
 AVRCharacter::AVRCharacter()
@@ -17,12 +18,14 @@ AVRCharacter::AVRCharacter()
 	Camera->SetupAttachment(GetRootComponent());
 
 	LeftController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("LeftController"));
-	LeftController->SetupAttachment(VRRoot);
+	LeftController->SetupAttachment(GetRootComponent());
 	LeftController->SetTrackingSource(EControllerHand::Left);
+	LeftController->SetShowDeviceModel(true);
 
 	RightController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("RightController"));
-	RightController->SetupAttachment(VRRoot);
+	RightController->SetupAttachment(GetRootComponent());
 	RightController->SetTrackingSource(EControllerHand::Right);
+	RightController->SetShowDeviceModel(true);
 
 }
 
@@ -37,6 +40,8 @@ void AVRCharacter::BeginPlay()
 void AVRCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	
 
 }
 
