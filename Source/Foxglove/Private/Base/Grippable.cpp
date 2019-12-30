@@ -9,14 +9,14 @@
 AGrippable::AGrippable()
 {
 
-	SphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
-	SphereComp->SetSphereRadius(75.0f);
-	RootComponent = SphereComp;
+	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollider"));
+	SphereCollider->SetGenerateOverlapEvents(true);
+	RootComponent = SphereCollider;
 
-	DecalComp = CreateDefaultSubobject<UDecalComponent>(TEXT("DecalComp"));
+	/*DecalComp = CreateDefaultSubobject<UDecalComponent>(TEXT("DecalComp"));
 	DecalComp->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f));
 	DecalComp->DecalSize = FVector(64, 75, 75);
-	DecalComp->SetupAttachment(RootComponent);
+	DecalComp->SetupAttachment(RootComponent);*/
 }
 
 // Called when the game starts or when spawned
@@ -28,6 +28,17 @@ void AGrippable::BeginPlay()
 
 void AGrippable::NotifyActorBeginOverlap(AActor* OtherActor)
 {
-	Super::NotifyActorBeginOverlap(OtherActor);
+	//Super::NotifyActorBeginOverlap(OtherActor);
+
+}
+
+void AGrippable::OnGripped()
+{
+	UE_LOG(LogTemp, Warning, TEXT("I've been gripped!"));
+}
+
+void AGrippable::OnUnGripped()
+{
+	UE_LOG(LogTemp, Warning, TEXT("I've been released!"));
 }
 

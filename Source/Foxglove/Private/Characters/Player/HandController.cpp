@@ -15,6 +15,11 @@ AHandController::AHandController()
 	SetRootComponent(MotionController);
 	MotionController->SetupAttachment(GetRootComponent());
 	MotionController->SetShowDeviceModel(true);
+	MotionController->SetGenerateOverlapEvents(true);
+
+	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollider"));
+	SphereCollider->SetGenerateOverlapEvents(true);
+	SphereCollider->SetupAttachment(RootComponent);
 
 }
 
@@ -22,7 +27,7 @@ AHandController::AHandController()
 void AHandController::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
@@ -31,4 +36,48 @@ void AHandController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+void AHandController::NotifyActorBeginOverlap(AActor* OtherActor)
+{
+	Super::NotifyActorBeginOverlap(OtherActor);
+
+	AGrippable* Grippable = Cast<AGrippable>(OtherActor);
+	if (Grippable != nullptr)
+	{
+		GripTarget = Grippable;
+	}
+}
+
+void AHandController::NotifyActorEndOverlap(AActor* OtherActor)
+{
+	AGrippable* Grippable = Cast<AGrippable>(OtherActor);
+	if (Grippable != nullptr && Grippable == GripTarget)
+	{
+		GripTarget = NULL;
+	}
+}
+
+void AHandController::BeginGripTarget()
+{
+	if (GripTarget != nullptr)
+	{
+		CurrentGrippable = GripTarget;
+		CurrentGrippable->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
+		CurrentGrippable->OnGripped();
+	}
+}
+
+void AHandController::EndGripTarget()
+{
+	if (CurrentGrippable != nullptr)
+	{
+		CurrentGrippable->OnUnGripped();
+		CurrentGrippable->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+		CurrentGrippable = NULL;
+	}
+}
+
+
+
+
 

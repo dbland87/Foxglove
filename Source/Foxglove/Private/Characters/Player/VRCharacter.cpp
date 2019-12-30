@@ -67,40 +67,61 @@ void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AVRCharacter::PrimaryGripPressed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Primary Grip Pressed"));
+	//UE_LOG(LogTemp, Warning, TEXT("Primary Grip Pressed"));
+	RightController->BeginGripTarget();
 }
 
 void AVRCharacter::PrimaryGripReleased()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Primary Grip Released"));
+	//UE_LOG(LogTemp, Warning, TEXT("Primary Grip Released"));
+	RightController->EndGripTarget();
 }
 
 void AVRCharacter::PrimaryTriggerPressed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Primary Trigger Pressed"));
+	//UE_LOG(LogTemp, Warning, TEXT("Primary Trigger Pressed"));
+	
 }
 
 void AVRCharacter::PrimaryTriggerReleased()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Primary Trigger Released"));
+	//UE_LOG(LogTemp, Warning, TEXT("Primary Trigger Released"));
 }
 
 void AVRCharacter::SecondaryGripPressed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Secondary Grip Pressed"));
+	//UE_LOG(LogTemp, Warning, TEXT("Secondary Grip Pressed"));
+	LeftController->BeginGripTarget();
 }
 
 void AVRCharacter::SecondaryGripReleased()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Secondary Grip Released"));
+	//UE_LOG(LogTemp, Warning, TEXT("Secondary Grip Released"));
+	LeftController->EndGripTarget();
 }
 
 void AVRCharacter::SecondaryTriggerPressed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Secondary Trigger Pressed"));
+	//UE_LOG(LogTemp, Warning, TEXT("Secondary Trigger Pressed"));
 }
 
 void AVRCharacter::SecondaryTriggerReleased()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Secondary Trigger Released"));
+	//UE_LOG(LogTemp, Warning, TEXT("Secondary Trigger Released"));
 }
+
+//void AVRCharacter::AttemptToGrip(AHandController* HandController)
+//{
+//	if (HandController != nullptr && HandController->GripTarget != nullptr)
+//	{
+//		HandController->GripTarget->OnGripped();
+//	}
+//}
+
+//void AVRCharacter::AttemptToRelease(AHandController* HandController)
+//{
+//	if (HandController != nullptr && HandController->GripTarget != nullptr)
+//	{
+//		HandController->GripTarget->OnUnGripped();
+//	}
+//}

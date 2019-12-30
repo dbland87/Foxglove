@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "MotionControllerComponent.h"
+#include "Grippable.h"
 #include "HandController.generated.h"
 
 UCLASS()
@@ -22,13 +23,29 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	USphereComponent* SphereCollider;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+
+	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
 
 private:
 
 	UPROPERTY(VisibleAnywhere)
 	UMotionControllerComponent* MotionController;
 
+public:
+	UPROPERTY(VisibleAnywhere)
+	AGrippable* GripTarget;
+
+	UPROPERTY(VisibleAnywhere)
+	AGrippable* CurrentGrippable;
+
+	void BeginGripTarget();
+	void EndGripTarget();
 };

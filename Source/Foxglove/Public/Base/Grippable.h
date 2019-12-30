@@ -24,20 +24,18 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USphereComponent* SphereComp;
-
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UDecalComponent* DecalComp;
+	USphereComponent* SphereCollider;
 
 public:
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
+
 public :
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Grippables")
+	/*UFUNCTION(BlueprintImplementableEvent, Category = "Grippables")*/
 	void OnGripped();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Grippables")
+	//UFUNCTION(BlueprintImplementableEvent, Category = "Grippables")
 	void OnUnGripped();
 };
