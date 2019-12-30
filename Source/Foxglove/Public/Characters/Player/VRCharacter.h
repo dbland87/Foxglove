@@ -41,4 +41,5 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	class UMotionControllerComponent* RightController;
-	};
+
+};

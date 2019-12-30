@@ -26,6 +26,7 @@ AVRCharacter::AVRCharacter()
 	RightController->SetTrackingSource(EControllerHand::Right);
 	RightController->SetShowDeviceModel(true);
 
+
 }
 
 // Called when the game starts or when spawned
@@ -39,15 +40,11 @@ void AVRCharacter::BeginPlay()
 void AVRCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	
-
 }
 
 // Called to bind functionality to input
 void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
