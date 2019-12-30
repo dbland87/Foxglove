@@ -42,4 +42,17 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	class UMotionControllerComponent* RightController;
 
+public :
+
+	// Input functions
+	void PrimaryGripPressed(); 
+	void PrimaryGripReleased();
+	void PrimaryTriggerPressed();
+	void PrimaryTriggerReleased();
+
+	void SecondaryGripPressed();
+	void SecondaryGripReleased();
+	void SecondaryTriggerPressed();
+	void SecondaryTriggerReleased();
+
 };
