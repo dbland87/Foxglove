@@ -35,9 +35,9 @@ public:
 
 public :
 
-	/*UFUNCTION(BlueprintImplementableEvent, Category = "Grippables");
+	UFUNCTION(BlueprintImplementableEvent, Category = "Grippables")
 	void OnGripped();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Grippables");
-	void OnUnGripped();*/
+	UFUNCTION(BlueprintImplementableEvent, Category = "Grippables")
+	void OnUnGripped();
 };

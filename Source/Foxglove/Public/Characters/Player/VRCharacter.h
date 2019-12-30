@@ -37,10 +37,13 @@ private:
 	class UCameraComponent* Camera;
 
 	UPROPERTY(EditDefaultsOnly)
-	class UMotionControllerComponent* LeftController;
+	class AHandController* LeftController;
 
 	UPROPERTY(EditDefaultsOnly)
-	class UMotionControllerComponent* RightController;
+	class AHandController* RightController;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AHandController> HandControllerClass;
 
 public :
 

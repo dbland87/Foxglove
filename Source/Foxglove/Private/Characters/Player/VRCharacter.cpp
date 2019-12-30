@@ -4,6 +4,7 @@
 #include "VRCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "HandController.h"
 
 
 // Sets default values
@@ -17,23 +18,27 @@ AVRCharacter::AVRCharacter()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(GetRootComponent());
-
-	LeftController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("LeftController"));
-	LeftController->SetupAttachment(GetRootComponent());
-	LeftController->SetTrackingSource(EControllerHand::Left);
-	LeftController->SetShowDeviceModel(true);
-
-	RightController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("RightController"));
-	RightController->SetupAttachment(GetRootComponent());
-	RightController->SetTrackingSource(EControllerHand::Right);
-	RightController->SetShowDeviceModel(true);
 }
 
 // Called when the game starts or when spawned
 void AVRCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	LeftController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
+	if (LeftController != nullptr)
+	{
+		LeftController->AttachToComponent(VRRoot, FAttachmentTransformRules::KeepRelativeTransform);
+		LeftController->SetOwner(this);
+		LeftController->SetHand(EControllerHand::Left);
+	}
+	RightController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
+	if (RightController != nullptr)
+	{
+		RightController->AttachToComponent(VRRoot, FAttachmentTransformRules::KeepRelativeTransform);
+		RightController->SetOwner(this);
+		RightController->SetHand(EControllerHand::Right);
+	}
 }
 
 // Called every frame
@@ -58,8 +63,6 @@ void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	InputComponent->BindAction("GripLeft", IE_Released, this, &AVRCharacter::SecondaryGripReleased);
 	InputComponent->BindAction("TriggerLeft", IE_Pressed, this, &AVRCharacter::SecondaryTriggerPressed);
 	InputComponent->BindAction("TriggerLeft", IE_Released, this, &AVRCharacter::SecondaryTriggerReleased);
-
-	InputComponent->BindAction("ButtonPressed", IE_Pressed, this, &AVRCharacter::PrimaryTriggerPressed);
 }
 
 void AVRCharacter::PrimaryGripPressed()
