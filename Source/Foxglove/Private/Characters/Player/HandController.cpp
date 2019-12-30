@@ -62,7 +62,7 @@ void AHandController::BeginGripTarget()
 	if (GripTarget != nullptr)
 	{
 		CurrentGrippable = GripTarget;
-		CurrentGrippable->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
+		CurrentGrippable->AttachToActor(this, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 		CurrentGrippable->OnGripped();
 	}
 }
@@ -72,7 +72,7 @@ void AHandController::EndGripTarget()
 	if (CurrentGrippable != nullptr)
 	{
 		CurrentGrippable->OnUnGripped();
-		CurrentGrippable->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+		CurrentGrippable->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 		CurrentGrippable = NULL;
 	}
 }
