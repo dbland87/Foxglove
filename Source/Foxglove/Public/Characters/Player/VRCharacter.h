@@ -21,6 +21,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void SetupVROrigin();
+
+	void SetupCamera();
+
+	void SpawnControllers();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -32,6 +38,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	class USceneComponent* VRRoot;
+
+	UPROPERTY(VisibleAnywhere)
+	class USceneComponent* CameraBase;
+
+	/*UPROPERTY(VisibleAnywhere)
+	class UCapsuleComponent* CapsuleComponent;*/
 
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;

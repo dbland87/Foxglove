@@ -59,7 +59,7 @@ void AHandController::NotifyActorEndOverlap(AActor* OtherActor)
 
 void AHandController::BeginGripTarget()
 {
-	if (GripTarget != nullptr)
+	if (GripTarget != nullptr) 
 	{
 		CurrentGrippable = GripTarget;
 		CurrentGrippable->AttachToActor(this, FAttachmentTransformRules::SnapToTargetNotIncludingScale);

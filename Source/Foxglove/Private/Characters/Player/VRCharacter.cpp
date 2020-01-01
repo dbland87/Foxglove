@@ -4,6 +4,8 @@
 #include "VRCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "HeadMountedDisplayFunctionLibrary.h"
+#include "Components/CapsuleComponent.h"
 #include "HandController.h"
 
 
@@ -13,32 +15,18 @@ AVRCharacter::AVRCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	VRRoot = CreateDefaultSubobject<USceneComponent>(TEXT("VRRoot"));
-	VRRoot->SetupAttachment(GetRootComponent());
-
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Camera->SetupAttachment(GetRootComponent());
+	SetupVROrigin();
+	SetupCamera();	
 }
+
+
 
 // Called when the game starts or when spawned
 void AVRCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	LeftController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
-	if (LeftController != nullptr)
-	{
-		LeftController->AttachToComponent(VRRoot, FAttachmentTransformRules::KeepRelativeTransform);
-		LeftController->SetOwner(this);
-		LeftController->SetHand(EControllerHand::Left);
-	}
-	RightController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
-	if (RightController != nullptr)
-	{
-		RightController->AttachToComponent(VRRoot, FAttachmentTransformRules::KeepRelativeTransform);
-		RightController->SetOwner(this);
-		RightController->SetHand(EControllerHand::Right);
-	}
+	//TODO: Should this happen in BeginPlay? What happens if they don't have controllers on yet?
+	SpawnControllers();
 }
 
 // Called every frame
@@ -110,18 +98,46 @@ void AVRCharacter::SecondaryTriggerReleased()
 	//UE_LOG(LogTemp, Warning, TEXT("Secondary Trigger Released"));
 }
 
-//void AVRCharacter::AttemptToGrip(AHandController* HandController)
-//{
-//	if (HandController != nullptr && HandController->GripTarget != nullptr)
-//	{
-//		HandController->GripTarget->OnGripped();
-//	}
-//}
+void AVRCharacter::SetupVROrigin()
+{
+	VRRoot = CreateDefaultSubobject<USceneComponent>(TEXT("VRRoot"));
+	VRRoot->SetupAttachment(GetRootComponent());
+}
 
-//void AVRCharacter::AttemptToRelease(AHandController* HandController)
-//{
-//	if (HandController != nullptr && HandController->GripTarget != nullptr)
-//	{
-//		HandController->GripTarget->OnUnGripped();
-//	}
-//}
+void AVRCharacter::SetupCamera()
+{
+	CameraBase = CreateDefaultSubobject<USceneComponent>(TEXT("CameraBase"));
+	CameraBase->SetupAttachment(GetRootComponent());
+
+	float halfHeight = GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+
+	FVector Position;
+	Position.X = 0.0f;
+	Position.Y = 0.0f;
+	Position.Z = -halfHeight;
+
+	FTransform Transform;
+	Transform.SetLocation(Position);
+	CameraBase->SetRelativeTransform(Transform);
+
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(CameraBase);
+}
+
+void AVRCharacter::SpawnControllers()
+{
+	LeftController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
+
+	check(LeftController);
+	LeftController->AttachToComponent(CameraBase, FAttachmentTransformRules::KeepRelativeTransform);
+	LeftController->SetOwner(this);
+	LeftController->SetHand(EControllerHand::Left);
+	
+	RightController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
+
+	check(RightController);
+	RightController->AttachToComponent(CameraBase, FAttachmentTransformRules::KeepRelativeTransform);
+	RightController->SetOwner(this);
+	RightController->SetHand(EControllerHand::Right);
+	
+}
