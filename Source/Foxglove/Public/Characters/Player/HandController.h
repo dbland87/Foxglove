@@ -17,7 +17,9 @@ public:
 	// Sets default values for this actor's properties
 	AHandController();
 
-	void SetHand(EControllerHand Hand) { MotionController->SetTrackingSource(Hand); }
+	void SetHand(EControllerHand Hand);
+	
+	//K{ MotionController->SetTrackingSource(Hand); }
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,15 +38,19 @@ public:
 
 private:
 
-	UPROPERTY(VisibleAnywhere)
-	UMotionControllerComponent* MotionController;
 
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UMotionControllerComponent* MotionController;
+
 	UPROPERTY(VisibleAnywhere)
 	AGrippable* GripTarget;
 
 	UPROPERTY(VisibleAnywhere)
 	AGrippable* CurrentGrippable;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool NeedsFlipped;
 
 	void BeginGripTarget();
 	void EndGripTarget();

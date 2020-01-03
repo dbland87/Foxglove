@@ -14,13 +14,18 @@ AHandController::AHandController()
 	MotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MotionController"));
 	SetRootComponent(MotionController);
 	MotionController->SetupAttachment(GetRootComponent());
-	MotionController->SetShowDeviceModel(true);
+	//MotionController->SetShowDeviceModel(true);
 	MotionController->SetGenerateOverlapEvents(true);
 
-	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollider"));
+	/*SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollider"));
 	SphereCollider->SetGenerateOverlapEvents(true);
-	SphereCollider->SetupAttachment(RootComponent);
+	SphereCollider->SetupAttachment(RootComponent);*/
 
+}
+
+void AHandController::SetHand(EControllerHand Hand)
+{
+	MotionController->SetTrackingSource(Hand);
 }
 
 // Called when the game starts or when spawned

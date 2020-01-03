@@ -9,17 +9,6 @@
 			"sources": [
 				{
 					"mode": "button",
-					"path": "/user/hand/left/input/a",
-					"inputs":
-					{
-						"click":
-						{
-							"output": "/actions/main/in/ButtonPressed"
-						}
-					}
-				},
-				{
-					"mode": "button",
 					"path": "/user/hand/left/input/grip",
 					"inputs":
 					{

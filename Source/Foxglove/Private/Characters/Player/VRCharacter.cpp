@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "HandController.h"
 
 
@@ -126,18 +127,22 @@ void AVRCharacter::SetupCamera()
 
 void AVRCharacter::SpawnControllers()
 {
-	LeftController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
-
+	LeftController = GetWorld()->SpawnActorDeferred<AHandController>(HandControllerClass, FTransform(), nullptr, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+	LeftController->NeedsFlipped = true;
+	LeftController->SetHand(EControllerHand::Left);
+	UGameplayStatics::FinishSpawningActor(LeftController, LeftController->GetTransform());
 	check(LeftController);
 	LeftController->AttachToComponent(CameraBase, FAttachmentTransformRules::KeepRelativeTransform);
 	LeftController->SetOwner(this);
-	LeftController->SetHand(EControllerHand::Left);
-	
-	RightController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
 
+	
+	
+	//RightController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
+	RightController = GetWorld()->SpawnActorDeferred<AHandController>(HandControllerClass, FTransform(), nullptr, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+	RightController->SetHand(EControllerHand::Right);
+	UGameplayStatics::FinishSpawningActor(RightController, RightController->GetTransform());
 	check(RightController);
 	RightController->AttachToComponent(CameraBase, FAttachmentTransformRules::KeepRelativeTransform);
 	RightController->SetOwner(this);
-	RightController->SetHand(EControllerHand::Right);
-	
+		
 }
